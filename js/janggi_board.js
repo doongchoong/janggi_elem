@@ -664,7 +664,7 @@ function Janggi_NewPiece(board, pos, piece) {
     board.piece_count++;
 
     function __Janggi_dragstart_event(e){
-        e.preventDefault();
+        e.dataTransfer.effectAllowed = "move";
         if(Janggi_IsDraggable(board) == false) {
             return ;
         }
@@ -674,7 +674,7 @@ function Janggi_NewPiece(board, pos, piece) {
         }        
         let cell_id = p.parentElement.getAttribute('cell_id');
         let coord = board.ref_coords[parseInt(cell_id)];
-        e.dataTransfer.setData('text/plain', coord);
+        e.dataTransfer.setData('text/plain', coord);        
         if(board.ilegalmove == false) {
             // get dest
             let dest = Janggi_GetCands(board, coord);
@@ -894,6 +894,7 @@ function __Janggi_SetEvent(board) {
 
         function __Janggi_dragent_event(e) {
             e.preventDefault();
+            
             // 드래그해온 엘리먼트 선택
             let from_coord = e.dataTransfer.getData('text/plain');
             let to_coord = board.ref_coords[parseInt(cell.getAttribute('cell_id'))];
