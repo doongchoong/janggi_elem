@@ -664,6 +664,7 @@ function Janggi_NewPiece(board, pos, piece) {
     board.piece_count++;
 
     function __Janggi_dragstart_event(e){
+        e.preventDefault();
         if(Janggi_IsDraggable(board) == false) {
             return ;
         }
@@ -848,6 +849,7 @@ function __Janggi_SetEvent(board) {
         let cell = board.querySelector('div[cell_id="' + obj.cell_id + '"]');
         
         cell.addEventListener('click', function(e){
+            e.preventDefault();
             if(Janggi_IsDraggable(board) == false) {
                 return ;
             }
@@ -891,6 +893,7 @@ function __Janggi_SetEvent(board) {
         cell.addEventListener('touchmove', function(e) { e.preventDefault(); });
 
         function __Janggi_dragent_event(e) {
+            e.preventDefault();
             // 드래그해온 엘리먼트 선택
             let from_coord = e.dataTransfer.getData('text/plain');
             let to_coord = board.ref_coords[parseInt(cell.getAttribute('cell_id'))];
