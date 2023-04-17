@@ -693,7 +693,7 @@ function Janggi_NewPiece(board, pos, piece) {
     // drag event
     p.addEventListener('dragstart', __Janggi_dragstart_event);
     // 드래그와 똑같음
-    p.addEventListener('touchmove', __Janggi_dragstart_event);
+    p.addEventListener('touchstart', __Janggi_dragstart_event);
 }
 
 
@@ -888,6 +888,7 @@ function __Janggi_SetEvent(board) {
             //cell.classList.remove('janggi_default_highlight');
         });
         cell.addEventListener('dragover', function(e) { e.preventDefault(); });
+        cell.addEventListener('touchmove', function(e) { e.preventDefault(); });
 
         function __Janggi_dragent_event(e) {
             // 드래그해온 엘리먼트 선택
