@@ -664,7 +664,7 @@ function Janggi_NewPiece(board, pos, piece) {
     board.piece_count++;
 
     function __Janggi_dragstart_event(e){
-        //e.dataTransfer.effectAllowed = "move";
+        e.dataTransfer.effectAllowed = "move";
         if(Janggi_IsDraggable(board) == false) {
             return ;
         }

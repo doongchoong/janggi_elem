@@ -2,6 +2,8 @@
 
 HTML에서 장기판 엘리먼트를 구현하는 프로젝트입니다. 
 
+[https://doongchoong.github.io/janggi_elem/](https://doongchoong.github.io/janggi_elem/)
+
 
 ## 1. 기본 사용법
 
