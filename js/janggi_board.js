@@ -663,8 +663,7 @@ function Janggi_NewPiece(board, pos, piece) {
     board.coords[pos].piece = '' + piece; // + board.piece_count;
     board.piece_count++;
 
-    // drag event
-    p.addEventListener('dragstart', function(e){
+    function __Janggi_dragstart_event(e){
         if(Janggi_IsDraggable(board) == false) {
             return ;
         }
@@ -689,7 +688,12 @@ function Janggi_NewPiece(board, pos, piece) {
             board.before_dest = dest;
         }
         Janggi_Render(board);
-    });
+    }
+
+    // drag event
+    p.addEventListener('dragstart', __Janggi_dragstart_event);
+    // 드래그와 똑같음
+    p.addEventListener('touchmove', __Janggi_dragstart_event);
 }
 
 
@@ -884,7 +888,8 @@ function __Janggi_SetEvent(board) {
             //cell.classList.remove('janggi_default_highlight');
         });
         cell.addEventListener('dragover', function(e) { e.preventDefault(); });
-        cell.addEventListener('drop', function(e) {
+
+        function __Janggi_dragent_event(e) {
             // 드래그해온 엘리먼트 선택
             let from_coord = e.dataTransfer.getData('text/plain');
             let to_coord = board.ref_coords[parseInt(cell.getAttribute('cell_id'))];
@@ -907,7 +912,10 @@ function __Janggi_SetEvent(board) {
                 board.coords[d].dest = false;
             }
             Janggi_Render(board);
-        });
+        }
+
+        cell.addEventListener('drop', __Janggi_dragent_event);
+        cell.addEventListener('touchend', __Janggi_dragent_event);
     }
 }
 
