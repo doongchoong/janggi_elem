@@ -527,10 +527,10 @@ function __Janggi_SetBoard(board, idx) {
     board.turn = 'w'; // cho
     board.turn_count = 0;
     board.before_dest = [];
-    if( board.hasAttribute('draggable-piece')){
-        board.draggable_piece = 'true';
+    if( board.hasAttribute('moveable-piece')){
+        board.moveable_piece = true;
     }else{
-        board.draggable_piece = 'false';
+        board.moveable_piece = false;
     }
     if( board.hasAttribute('ilegalmove')){
         board.ilegalmove = true;
@@ -627,7 +627,7 @@ function Janggi_SetRankFile(board) {
 function Janggi_CheckTurn(board, piece) {
     // 무제한 모드이면 턴 확인하지 않음
     if(board.ilegalmove) {
-        return ;
+        return true;
     }
     if(piece.toUpperCase() == piece && board.turn == 'w'){
         return true;
@@ -639,12 +639,8 @@ function Janggi_CheckTurn(board, piece) {
 }
 
 // 기물 드래그 가능한지 여부
-function Janggi_IsDraggable(board){
-    if (board.draggable_piece == "true"){
-        return true;
-    }else{
-        return false;
-    }
+function Janggi_IsMoveable(board){
+    return board.moveable_piece;
 }
 
 
@@ -658,43 +654,9 @@ function Janggi_NewPiece(board, pos, piece) {
     p.setAttribute('piece', '' + piece); // + board.piece_count);
     p.style.cssText = 'width:100%; height:100%; position: relative; z-index:9;'; // 기물은 높은 우선순위 가짐
     p.setAttribute('src', pimgmap[piece]);
-    p.setAttribute('draggable', board.draggable_piece);
     board.hidden_elem.appendChild(p);
     board.coords[pos].piece = '' + piece; // + board.piece_count;
     board.piece_count++;
-
-    function __Janggi_dragstart_event(e){
-        e.dataTransfer.effectAllowed = "move";
-        if(Janggi_IsDraggable(board) == false) {
-            return ;
-        }
-        // 턴 확인
-        if(Janggi_CheckTurn(board, p.getAttribute('piece')) == false){
-            return ;
-        }        
-        let cell_id = p.parentElement.getAttribute('cell_id');
-        let coord = board.ref_coords[parseInt(cell_id)];
-        e.dataTransfer.setData('text/plain', coord);        
-        if(board.ilegalmove == false) {
-            // get dest
-            let dest = Janggi_GetCands(board, coord);
-            // clear
-            for(let d of board.before_dest){
-                board.coords[d].dest = false;
-            }
-            // set
-            for(let d of dest){
-                board.coords[d].dest = true;
-            }
-            board.before_dest = dest;
-        }
-        Janggi_Render(board);
-    }
-
-    // drag event
-    p.addEventListener('dragstart', __Janggi_dragstart_event);
-    // 드래그와 똑같음
-    p.addEventListener('touchstart', __Janggi_dragstart_event);
 }
 
 
@@ -818,21 +780,8 @@ function Janggi_ParseFEN(board, fen){
 }
 
 // 드래그 가능 여부 세팅
-function Janggi_SetDraggable(board, isDraggable){
-    // clear
-    if(isDraggable == true){
-        board.draggable_piece = 'true';  // 문자열임. boolean 아님
-    }else{
-        board.draggable_piece = 'false';  // 문자열임. boolean 아님
-        console.log(board.draggable_piece);
-    }
-    
-    let pieces = board.querySelectorAll('img[piece]');
-    for (let i = 0; i < pieces.length; i++) {
-        let piece = pieces[i];
-        piece.setAttribute('draggable', board.draggable_piece);
-        console.log(piece);
-    }
+function Janggi_SetMoveable(board, isMoveable){
+    board.moveable_piece = isMoveable;
 }
 
 // 무제한모드 세팅
@@ -840,85 +789,119 @@ function Janggi_SetIlegalmove(board, isIlegalmove) {
     board.ilegalmove = isIlegalmove;
 }
 
+// 
+function __Janggi_SelectedMode(board, coord){
+    // 턴확인
+    if(Janggi_CheckTurn(board, board.coords[coord].piece) == false){
+        return ;
+    }
+    // 기존 선택 셀 하일라이트 헤제
+    if(board.before_highlight != null){
+        Janggi_UnsetHighlight(board, board.before_highlight);
+    }
+    // 선택한 셀 하일라이트
+    Janggi_SetHighlight(board, coord);
+    // 현재 셀을 기록
+    board.before_highlight = coord;
+    board.before_click = coord;
+
+    if(board.ilegalmove == false) {
+        // 규칙모드일 때 이동가능 지점 구하기
+        let dest = Janggi_GetCands(board, coord);
+        // 기존 목표지점 헤제
+        for(let d of board.before_dest){
+            Janggi_UnsetDest(board, d);
+        }
+        // 현 목표지점 세팅
+        for(let d of dest){
+            Janggi_SetDest(board, d);
+        }
+        board.before_dest = dest;
+    }
+    //Janggi_Render(board);
+}
+
 
 // 이벤트 세팅
 function __Janggi_SetEvent(board) {
     board.before_click = null;
+    board.before_highlight = null;
     for(let k in board.coords){
         let obj = board.coords[k];
         let cell = board.querySelector('div[cell_id="' + obj.cell_id + '"]');
         
         cell.addEventListener('click', function(e){
-            if(Janggi_IsDraggable(board) == false) {
+            if(Janggi_IsMoveable(board) == false) {
                 return ;
             }
             // 좌표
             let coord = board.ref_coords[parseInt(cell.getAttribute('cell_id'))];
-            // 턴확인
-            if(Janggi_CheckTurn(board, board.coords[coord].piece) == false){
-                return ;
-            }
-            if (board.coords[coord].piece != ''){
-                if (board.before_click != null){
-                    board.coords[board.before_click].highlight = false;
+            
+            if(board.before_click == null){
+                // 직전에 선택한 셀이 없는 경우,  선택모드임
+                if(board.coords[coord].piece != ''){ // 기물이 있는 경우
+                    __Janggi_SelectedMode(board, coord);
+                }                
+            } else {
+                // 직전에 선택한 셀이 있는 경우
+
+                // 지금 선택한 셀이 비어있는 경우 => 이동모드
+                // 지금 선택한 셀에 상대기물이 있는 경우 => 이동모드
+                // 지금 선택한 셀에 같은편 기물이 있는 경우 => 선택변경
+
+                let to_piece   = board.coords[coord             ].piece;
+                let from_piece = board.coords[board.before_click].piece; 
+
+                let is_same_side = false;
+
+                if(to_piece != ''){
+                    if(to_piece  == to_piece  .toUpperCase() &&
+                       from_piece == from_piece.toUpperCase() ){
+                        // 둘다 대문자이면 초나라 같은 편
+                        is_same_side = true;
+                    }
+                    if(to_piece  == to_piece  .toLowerCase() &&
+                       from_piece == from_piece.toLowerCase() ){
+                        // 둘다 대문자이면 초나라 같은 편
+                        is_same_side = true;
+                    }
                 }
-                board.coords[coord].highlight = true;
-                board.before_click = coord;
-                if(board.ilegalmove == false) {
-                    // get dest
-                    let dest = Janggi_GetCands(board, coord);
-                    // clear
+
+                
+                if(is_same_side){
+                    // 같은 편 기물을 변경선택한 경우
+                    __Janggi_SelectedMode(board, coord);
+                }else {
+                    // 이동모드
+                    // 목표지점 아니면 이동하지 않음
+                    if (board.ilegalmove == false &&
+                        board.coords[coord].dest == false){
+                        return ;
+                    }
+            
+                    // 이동가능한 경우
+                    let from_coord = board.before_click;
+
+                    // 기존 선택 셀 하일라이트 헤제
+                    if(board.before_highlight != null){
+                        Janggi_UnsetHighlight(board, board.before_highlight);
+                    }
+                    // 선택한 셀 하일라이트
+                    Janggi_SetHighlight(board, coord);
+                    // 현재 셀을 기록
+                    board.before_highlight = coord;
+                    // 이동
+                    Janggi_Move(board, from_coord, coord);
+                    // 기존 목표지점 헤제
                     for(let d of board.before_dest){
-                        board.coords[d].dest = false;
+                        Janggi_UnsetDest(board, d);
                     }
-                    // set
-                    for(let d of dest){
-                        board.coords[d].dest = true;
-                    }
-                    board.before_dest = dest;
+                    board.before_click = null;
                 }
-                Janggi_Render(board);
-            }            
-        });
-        cell.addEventListener('dragenter', function(e) {
-            e.preventDefault();
-            //cell.classList.add('janggi_default_highlight');
-        });
-        cell.addEventListener('dragleave', function(e) {
-            e.preventDefault();
-            //cell.classList.remove('janggi_default_highlight');
-        });
-        cell.addEventListener('dragover', function(e) { e.preventDefault(); });
-        cell.addEventListener('touchmove', function(e) { e.preventDefault(); });
+            }
 
-        function __Janggi_dragent_event(e) {
-            
-            // 드래그해온 엘리먼트 선택
-            let from_coord = e.dataTransfer.getData('text/plain');
-            let to_coord = board.ref_coords[parseInt(cell.getAttribute('cell_id'))];
-            // 목표지점 아니면 이동하지 않음
-            if (board.ilegalmove == false &&
-                board.coords[to_coord].dest == false){
-                return ;
-            }
-            
-            // 이동가능한 경우
-
-            if (board.before_click != null){
-                board.coords[board.before_click].highlight = false;
-            }
-            board.coords[to_coord].highlight = true;
-            board.before_click = to_coord;
-            Janggi_Move(board, from_coord, to_coord);
-            // clear dest
-            for(let d of board.before_dest){
-                board.coords[d].dest = false;
-            }
             Janggi_Render(board);
-        }
-
-        cell.addEventListener('drop', __Janggi_dragent_event);
-        cell.addEventListener('touchend', __Janggi_dragent_event);
+        });
     }
 }
 
@@ -1048,6 +1031,7 @@ const janggi_classes = `
     box-shadow: 0px 0px 15px black inset;
 }
 .janggi_default_dest {
+    opacity: 0.8;
     background-size: cover;
     background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAG0SURBVFiF7ZjPShtRFIe/uZn8sROIlFTaSmk0WuhruEk36saNtg/gsin4Dt31JVLdCYobX0RRrCiBklZSdLzTTFLnjot0k1omPRkhFe4Hs7mc3z0fdy5cOE4e9CxKI+AMU+jApCQzAZcVVCjJnGKK7hzqqoH3XBJ8S9A8wEgizKD8z3gvJJl3BF+VqMsYcP9c+IKhR5wY6kBW2qgD2UOixJocDlUGz+yOYJ1Oqws7SRuFmJ9SwTZm6z3ho6SaPCzv4j1NFMzBdROzLhUYhg8f/CH3topaAAYE//s7aAXTYgXTYgXT4raIj2vodgYyLpgenI1LRhMfLaG7N6AiiCJoj8vFYrFYLBZLHycH1y9RVwBdyGrM5g+oj0PmMXwqotby8AvgHFNy51F+A28a4JCIDcICwqnBfTGBKnykMPWaDPBAJgtWMC1WMC1WMC0D060cDsDKDOpNUkgTH18Q1ySNnuDsF3FeJdX0oPjb4e+CVRR7eGWgnLTRItqXyAHk4dk2XkWaG+kXxwwZwd5TBkYQjPuf+C2MwYxi6J5gSmsE3/41YMAJIZA2CkGvEnxXgpM8xZRuAQfZeEmQ1ZIgAAAAAElFTkSuQmCC");
 }

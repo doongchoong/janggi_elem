@@ -68,6 +68,16 @@
             </ol>
             </li>
             <li>FEN : 체스의 FEN 표기법을 사용할 수 있습니다.</li>
+            <ol dir="auto">
+              <li>대문자: 초나라, 소문자: 한나라</li>
+              <li>K k (King) 왕</li>
+              <li>R r (Rook) 차 </li>
+              <li>N n (kNight) 마</li>
+              <li>E e (Elephant) 상</li>
+              <li>A a (Advisor) 사</li>
+              <li>C c (Cannon) 포</li>
+              <li>P p (Pawn) 졸/병</li>
+              </ol>
             </ol>
 
         </div>
@@ -92,23 +102,23 @@ orietation="han" &gt;&lt;/janggi-board&gt;
       </div>
 
       <div class="row  d-flex flex-wrap justify-content-center py-3 mb-4 ">
-        <h3 class="col-md-4">드래그드롭 (Draggable)</h3>
+        <h3 class="col-md-4">이동가능 (Moveable)</h3>
       </div>
       <div class="row row d-flex flex-wrap justify-content-center py-3 mb-4  border-bottom">
         <div class="col-md-4">
-          <janggi-board position="start" draggable-piece ></janggi-board>
+          <janggi-board position="start" moveable-piece ></janggi-board>
         </div>
         <div class="col-md-4">
           <pre class="prettyprint"><code class="language-html">&lt;janggi-board position="start"
-  draggable-piece &gt;&lt;/janggi-board&gt;
+  moveable-piece &gt;&lt;/janggi-board&gt;
 &lt;script src=&quot;js/janggi_board.js&quot; &gt;&lt;/script&gt;
           </code></pre>
-          <p dir="auto">기물을 드래그-드롭 할 수 있는 모드입니다.
-            <code>draggable-piece</code> 어트리뷰트를 설정하면 됩니다.</p>
+          <p dir="auto">기물을 이동 할 수 있는 모드입니다.
+            <code>moveable-piece</code> 어트리뷰트를 설정하면 됩니다.</p>
             <p dir="auto">기본적으로 초/한 순서를 바꿔가며 기물을 움직일 수 있으며
-                기물이 움직일수 있는 위치로만 드래그가 가능합니다.
+                기물이 움직일수 있는 위치로만 이동이 가능합니다.
             </p>
-            <p dir="auto">클릭 하거나 드래그를 시작하면 이동 가능한 위치가 표시됩니다.</p>
+            <p dir="auto">클릭 하면 이동 가능한 위치가 표시됩니다. 이동 가능 위치를 클릭하면 이동합니다.</p>
         </div>
       </div>
 
@@ -118,16 +128,16 @@ orietation="han" &gt;&lt;/janggi-board&gt;
       </div>
       <div class="row row d-flex flex-wrap justify-content-center py-3 mb-4  border-bottom">
         <div class="col-md-4">
-          <janggi-board position="start" draggable-piece ilegalmove ></janggi-board>
+          <janggi-board position="start" moveable-piece ilegalmove ></janggi-board>
         </div>
         <div class="col-md-4">
           <pre class="prettyprint"><code class="language-html">&lt;janggi-board position="start"
-  draggable-piece
+  moveable-piece
   ilegalmove &gt;&lt;/janggi-board&gt;
 &lt;script src=&quot;js/janggi_board.js&quot; &gt;&lt;/script&gt;
           </code></pre>
           <p dir="auto">기물이 무규칙으로 마음대로 이동할 수 있는 모드입니다.
-            드래그드롭 모드일때 작동됩니다.</p>
+            이동가능 모드일때 작동됩니다.</p>
         </div>
       </div>
 
@@ -137,11 +147,11 @@ orietation="han" &gt;&lt;/janggi-board&gt;
       </div>
       <div class="row row d-flex flex-wrap justify-content-center py-3 mb-4  border-bottom">
         <div class="col-md-4">
-          <janggi-board position="start" draggable-piece chess-pieces></janggi-board>
+          <janggi-board position="start" moveable-piece chess-pieces></janggi-board>
         </div>
         <div class="col-md-4">
           <pre class="prettyprint"><code class="language-html">&lt;janggi-board position="start"
-  draggable-piece
+  moveable-piece
   chess-pieces&gt;
   &lt;/janggi-board&gt;
 &lt;script src=&quot;js/janggi_board.js&quot; &gt;&lt;/script&gt;
