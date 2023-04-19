@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="ko">
   <head>
@@ -5,164 +6,203 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Janggi_elem</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
   </head>
   <body>
     <div class="container">
         <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-          <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+          <a href="https://doongchoong.github.io/janggi_elem/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
             <span class="fs-4">Janggi_Elem</span>
           </a>
     
           <ul class="nav nav-pills">
-            <li class="nav-item"><a href="https://doongchoong.github.io/janggi_elem/" class="nav-link" aria-current="page">시작</a></li>
-            <li class="nav-item"><a href="https://doongchoong.github.io/janggi_elem/example/" class="nav-link  active">예제</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">페이지</a></li>
-            <li class="nav-item"><a href="https://github.com/doongchoong/janggi_elem" class="nav-link">Github</a></li>
+            <li class="nav-item"><a href="https://doongchoong.github.io/janggi_elem/" class="nav-link  ">시작</a></li>
+<li class="nav-item"><a href="https://doongchoong.github.io/janggi_elem/example" class="nav-link active">Example</a></li>
+<li class="nav-item"><a href="https://github.com/doongchoong/janggi_elem" class="nav-link  ">Github</a></li>
+
           </ul>
         </header>
-        
-        
       </div>
-
     <div class="container">
-      <div class="row  d-flex flex-wrap justify-content-center py-3 mb-4 ">
-        <h3 class="col-md-4">빈 장기판 생성</h3>
-      </div>
-      <div class="row  d-flex flex-wrap justify-content-center py-3 mb-4  border-bottom">
-        <div class="col-md-4">
-          <janggi-board></janggi-board>
-        </div>
-        <div class="col-md-4">
-          <pre class="prettyprint"><code class="language-html">&lt;janggi-board&gt;&lt;/janggi-board&gt;
+
+<div class="row mb-2  border-bottom">
+
+<div class="col-md-6">
+<h3>빈 장기판 생성</h3>
+</div>
+
+<div class="col-md-6">
+
+</div>
+
+<div class="col-md-6">
+<p><janggi-board></janggi-board></p>
+</div>
+
+<div class="col-md-6">
+<pre><code class="language-html">&lt;janggi-board&gt;&lt;/janggi-board&gt;
 &lt;script src=&quot;js/janggi_board.js&quot; &gt;&lt;/script&gt;
-          </code></pre>
-          <p dir="auto"><code>janggi-board</code> 태그를 생성한 뒤 에  <code>janggi_board.js</code> 스크립트를 로드하면
-            장기판이 생성됩니다. 스크립트는 한번만 로드하면 됩니다.</p>
-        </div>
-      </div>
+</code></pre>
+<p><code>janggi-board</code> 태그를 생성한 뒤 에 <code>janggi_board.js</code> 스크립트를 로드하면 장기판이 생성됩니다. 스크립트는 한번만 로드하면 됩니다.</p>
+</div>
 
-      <div class="row  d-flex flex-wrap justify-content-center py-3 mb-4 ">
-        <h3 class="col-md-4">시작 위치 (position)</h3>
-      </div>
-      <div class="row row d-flex flex-wrap justify-content-center py-3 mb-4  border-bottom">
-        <div class="col-md-4">
-          <janggi-board position="start"></janggi-board>
-          <janggi-board position="[doubled-knight][coupled-knight]"></janggi-board>
-          <janggi-board position="3aka3/7re/4cc3/1ppppp3/r8/EN7/1PPPPP3/4CC3/9/3AKA3 w - - 0 1"></janggi-board>
-        </div>
-        <div class="col-md-4">
-          <pre class="prettyprint"><code class="language-html">&lt;janggi-board position="start"&gt;&lt;/janggi-board&gt;
-&lt;janggi-board position="[doubled-knight][coupled-knight]"&gt;&lt;/janggi-board&gt;
-&lt;janggi-board position="3aka3/7re/4cc3/1ppppp3/r8/EN7/1PPPPP3/4CC3/9/3AKA3 w - - 0 1"&gt;&lt;/janggi-board&gt;
+</div>
+
+<div class="row mb-2  border-bottom">
+
+<div class="col-md-6">
+<h3>시작위치 (Position)</h3>
+</div>
+
+<div class="col-md-6">
+
+</div>
+
+<div class="col-md-6">
+<p><janggi-board position="start"></janggi-board>
+<janggi-board position="[doubled-knight][coupled-knight]"></janggi-board>
+<janggi-board position="3aka3/7re/4cc3/1ppppp3/r8/EN7/1PPPPP3/4CC3/9/3AKA3 w - - 0 1"></janggi-board></p>
+</div>
+
+<div class="col-md-6">
+<p>빈 장기판에서 기물들을 시작 위치시킬수 있습니다.</p>
+<ol>
+<li>"start" : 초 좌귀마, 한 우귀마 기본값으로 기물들이 위치합니다.</li>
+<li>"[left-knight][right-knight]" : [한][초] 시작 포지션입니다.<ol>
+<li>left-knight : 좌귀마</li>
+<li>right-knight : 우귀마</li>
+<li>doubled-knight : 양귀마</li>
+<li>coupled-knight : 원앙마</li>
+</ol>
+</li>
+<li>FEN : 체스의 FEN 표기법을 사용할 수 있습니다.<ol>
+<li>대문자: 초나라, 소문자: 한나라</li>
+<li>K k (King) 왕</li>
+<li>R r (Rook) 차</li>
+<li>N n (kNight) 마</li>
+<li>E e (Elephant) 상</li>
+<li>A a (Advisor) 사</li>
+<li>C c (Cannon) 포</li>
+<li>P p (Pawn) 졸/병</li>
+</ol>
+</li>
+</ol>
+</div>
+
+</div>
+
+<div class="row mb-2  border-bottom">
+
+<div class="col-md-6">
+<h3>시작 방향 (Orientation)</h3>
+</div>
+
+<div class="col-md-6">
+
+</div>
+
+<div class="col-md-6">
+<p><janggi-board position="start"
+orietation="han" ></janggi-board></p>
+</div>
+
+<div class="col-md-6">
+<pre><code class="language-html">&lt;janggi-board position=&quot;start&quot;
+orietation=&quot;han&quot; &gt;&lt;/janggi-board&gt;
 &lt;script src=&quot;js/janggi_board.js&quot; &gt;&lt;/script&gt;
-          </code></pre>
-          <p dir="auto">빈 장기판에서 기물들을 시작 위치시킬수 있습니다.</p>
-          <ol dir="auto">
-            <li>"start" : 초 좌귀마, 한 우귀마  기본값으로 기물들이 위치합니다.</li>
-            <li>"[left-knight][right-knight]" : [한][초] 시작 포지션입니다.
-            <ol dir="auto">
-            <li>left-knight : 좌귀마</li>
-            <li>right-knight : 우귀마</li>
-            <li>doubled-knight : 양귀마</li>
-            <li>coupled-knight : 원앙마</li>
-            </ol>
-            </li>
-            <li>FEN : 체스의 FEN 표기법을 사용할 수 있습니다.</li>
-            <ol dir="auto">
-              <li>대문자: 초나라, 소문자: 한나라</li>
-              <li>K k (King) 왕</li>
-              <li>R r (Rook) 차 </li>
-              <li>N n (kNight) 마</li>
-              <li>E e (Elephant) 상</li>
-              <li>A a (Advisor) 사</li>
-              <li>C c (Cannon) 포</li>
-              <li>P p (Pawn) 졸/병</li>
-              </ol>
-            </ol>
+</code></pre>
+<p>기본적으로 초의 방향에서 장기판이 보이지만 한의 방향으로 변경할 수 있습니다.</p>
+</div>
 
-        </div>
-      </div>
+</div>
 
+<div class="row mb-2  border-bottom">
 
-      <div class="row  d-flex flex-wrap justify-content-center py-3 mb-4 ">
-        <h3 class="col-md-4">시작 방향 (Orientation)</h3>
-      </div>
-      <div class="row row d-flex flex-wrap justify-content-center py-3 mb-4  border-bottom">
-        <div class="col-md-4">
-          <janggi-board position="start" orientation="han"></janggi-board>
-        </div>
-        <div class="col-md-4">
-          <pre class="prettyprint"><code class="language-html">&lt;janggi-board position="start"
-orietation="han" &gt;&lt;/janggi-board&gt;
-&lt;script src=&quot;js/janggi_board.js&quot; &gt;&lt;/script&gt;
-          </code></pre>
-          <p dir="auto">기본적으로 초의 방향에서 장기판이 보이지만
-            한의 방향으로 변경할 수 있습니다.</p>
-        </div>
-      </div>
+<div class="col-md-6">
+<h3>이동가능 (Moveable)</h3>
+</div>
 
-      <div class="row  d-flex flex-wrap justify-content-center py-3 mb-4 ">
-        <h3 class="col-md-4">이동가능 (Moveable)</h3>
-      </div>
-      <div class="row row d-flex flex-wrap justify-content-center py-3 mb-4  border-bottom">
-        <div class="col-md-4">
-          <janggi-board position="start" moveable-piece ></janggi-board>
-        </div>
-        <div class="col-md-4">
-          <pre class="prettyprint"><code class="language-html">&lt;janggi-board position="start"
+<div class="col-md-6">
+
+</div>
+
+<div class="col-md-6">
+<p><janggi-board position="start"
+  moveable-piece ></janggi-board></p>
+</div>
+
+<div class="col-md-6">
+<pre><code class="language-html">&lt;janggi-board position=&quot;start&quot;
   moveable-piece &gt;&lt;/janggi-board&gt;
 &lt;script src=&quot;js/janggi_board.js&quot; &gt;&lt;/script&gt;
-          </code></pre>
-          <p dir="auto">기물을 이동 할 수 있는 모드입니다.
-            <code>moveable-piece</code> 어트리뷰트를 설정하면 됩니다.</p>
-            <p dir="auto">기본적으로 초/한 순서를 바꿔가며 기물을 움직일 수 있으며
-                기물이 움직일수 있는 위치로만 이동이 가능합니다.
-            </p>
-            <p dir="auto">클릭 하면 이동 가능한 위치가 표시됩니다. 이동 가능 위치를 클릭하면 이동합니다.</p>
-        </div>
-      </div>
+</code></pre>
+<p>기물을 이동 할 수 있는 모드입니다. moveable-piece 어트리뷰트를 설정하면 됩니다.</p>
+<p>기본적으로 초/한 순서를 바꿔가며 기물을 움직일 수 있으며 기물이 움직일수 있는 위치로만 이동이 가능합니다.</p>
+<p>클릭 하면 이동 가능한 위치가 표시됩니다. 이동 가능 위치를 클릭하면 이동합니다.</p>
+</div>
 
+</div>
 
-      <div class="row  d-flex flex-wrap justify-content-center py-3 mb-4 ">
-        <h3 class="col-md-4">무규칙이동 (Ilegalmove)</h3>
-      </div>
-      <div class="row row d-flex flex-wrap justify-content-center py-3 mb-4  border-bottom">
-        <div class="col-md-4">
-          <janggi-board position="start" moveable-piece ilegalmove ></janggi-board>
-        </div>
-        <div class="col-md-4">
-          <pre class="prettyprint"><code class="language-html">&lt;janggi-board position="start"
+<div class="row mb-2  border-bottom">
+
+<div class="col-md-6">
+<h3>무규칙이동 (Ilegalmove)</h3>
+</div>
+
+<div class="col-md-6">
+
+</div>
+
+<div class="col-md-6">
+<p><janggi-board position="start"
+  moveable-piece
+  ilegalmove ></janggi-board></p>
+</div>
+
+<div class="col-md-6">
+<pre><code class="language-html">&lt;janggi-board position=&quot;start&quot;
   moveable-piece
   ilegalmove &gt;&lt;/janggi-board&gt;
 &lt;script src=&quot;js/janggi_board.js&quot; &gt;&lt;/script&gt;
-          </code></pre>
-          <p dir="auto">기물이 무규칙으로 마음대로 이동할 수 있는 모드입니다.
-            이동가능 모드일때 작동됩니다.</p>
-        </div>
-      </div>
+</code></pre>
+<p>기물이 무규칙으로 마음대로 이동할 수 있는 모드입니다. 이동가능 모드일때 작동됩니다.</p>
+</div>
 
+</div>
 
-      <div class="row  d-flex flex-wrap justify-content-center py-3 mb-4 ">
-        <h3 class="col-md-4">체스기물 (Chess-pieces)</h3>
-      </div>
-      <div class="row row d-flex flex-wrap justify-content-center py-3 mb-4  border-bottom">
-        <div class="col-md-4">
-          <janggi-board position="start" moveable-piece chess-pieces></janggi-board>
-        </div>
-        <div class="col-md-4">
-          <pre class="prettyprint"><code class="language-html">&lt;janggi-board position="start"
+<div class="row mb-2  border-bottom">
+
+<div class="col-md-6">
+<h3>체스기물 (Chess-pieces)</h3>
+</div>
+
+<div class="col-md-6">
+
+</div>
+
+<div class="col-md-6">
+<p><janggi-board position="start"
+  moveable-piece
+  chess-pieces>
+  </janggi-board></p>
+</div>
+
+<div class="col-md-6">
+<pre><code class="language-html">&lt;janggi-board position=&quot;start&quot;
   moveable-piece
   chess-pieces&gt;
   &lt;/janggi-board&gt;
-&lt;script src=&quot;js/janggi_board.js&quot; &gt;&lt;/script&gt;
-          </code></pre>
-          <p dir="auto">기물 모양이 체스기물 모양입니다.</p>
-        </div>
-      </div>
+</code></pre>
+<p>기물 모양이 체스기물 모양입니다.</p>
+</div>
+
+</div>
 
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
-    <script src="../js/janggi_board.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <script src="https://doongchoong.github.io/janggi_elem/js/janggi_board.js" ></script>
   </body>
 </html>

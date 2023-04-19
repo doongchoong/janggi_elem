@@ -1,3 +1,6 @@
 *.png
 utils/imgs/
+utils/post.py
+venv/
+posts/
 output.txt
