@@ -2,5 +2,6 @@
 utils/imgs/
 utils/post.py
 venv/
+refactoring/
 posts/
 output.txt
