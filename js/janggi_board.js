@@ -594,7 +594,6 @@ function __Janggi_SetBoard(board, idx) {
     // 히든 (Piece 클리어용)
     let hidden = document.createElement('div');
     hidden.style.cssText = 'display:none;';
-    hidden.setAttribute('cell_id', '-1');
     board.hidden_elem = hidden;
     board.appendChild(hidden);
 }
@@ -663,7 +662,6 @@ function Janggi_NewPiece(board, pos, piece) {
     p.style.cssText = 'width:100%; height:100%; position: relative; z-index:9;'; // 기물은 높은 우선순위 가짐
     p.setAttribute('src', pimgmap[piece]);
     board.hidden_elem.appendChild(p);
-    p.from_id = -1;
     board.coords[pos].piece = '' + piece; // + board.piece_count;
     board.piece_count++;
 }
@@ -946,7 +944,33 @@ function Janggi_Render(board) {
                     'img[piece="' + coordobj.piece + '"]'
                 );
             cell.appendChild(piece);
-            
+            if(board.animationmove == true) {
+                if( coordobj.cell_id != coordobj.from_cell_id) {
+                    // 애니메이션
+                    let origin_row = parseInt(coordobj.from_cell_id / 9);
+                    let origin_col = parseInt(coordobj.from_cell_id) % 9;
+                    let target_row = parseInt(coordobj.cell_id / 9);
+                    let target_col = coordobj.cell_id % 9;
+                    let top_css = 'top:' + (board.cell_size * (
+                        origin_row - target_row
+                    )) + 'px;';
+                    let left_css = 'left:' + (board.cell_size *(
+                        origin_col - target_col
+                    )) + 'px;';
+                    let style_css = 'position: absolute; transition: all 200ms linear;z-index:9;';
+                    style_css += 'width:' + board.cell_size + 'px;height:' + board.cell_size + 'px;';
+                    style_css += top_css + left_css;
+                    piece.style.cssText = style_css;
+                    setTimeout(function(){
+                        piece.style.left = '0px';
+                        piece.style.top = '0px';
+                        setTimeout(function(){
+                            piece.style.cssText = 'width:100%; height:100%; position: relative; z-index:9;';
+                            coordobj.from_cell_id = coordobj.cell_id;
+                        }, 200);
+                    }, 10);
+                }            
+            }        
         }
         if (coordobj.highlight == true) {
             cell.classList.add('janggi_default_highlight');
@@ -954,33 +978,7 @@ function Janggi_Render(board) {
         if (coordobj.dest == true) {
             cell.classList.add('janggi_default_dest');
         }
-        if(board.animationmove == true) {
-            if( coordobj.cell_id != coordobj.from_cell_id) {
-                // 애니메이션
-                let origin_row = parseInt(coordobj.from_cell_id / 9);
-                let origin_col = parseInt(coordobj.from_cell_id) % 9;
-                let target_row = parseInt(coordobj.cell_id / 9);
-                let target_col = coordobj.cell_id % 9;
-                let top_css = 'top:' + (board.cell_size * (
-                    origin_row - target_row
-                )) + 'px;';
-                let left_css = 'left:' + (board.cell_size *(
-                    origin_col - target_col
-                )) + 'px;';
-                let style_css = 'position: absolute; transition: all 200ms linear;z-index:9;';
-                style_css += 'width:' + board.cell_size + 'px;height:' + board.cell_size + 'px;';
-                style_css += top_css + left_css;
-                piece.style.cssText = style_css;
-                setTimeout(function(){
-                    piece.style.left = '0px';
-                    piece.style.top = '0px';
-                    setTimeout(function(){
-                        piece.style.cssText = 'width:100%; height:100%; position: relative; z-index:9;';
-                        coordobj.from_cell_id = coordobj.cell_id;
-                    }, 200);
-                }, 10);
-            }            
-        }        
+        
     }
     // remove remain pieces
     while (board.hidden_elem.firstChild) {
