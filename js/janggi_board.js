@@ -716,27 +716,106 @@ function Janggi_UnsetDest(board, pos) {
 
 // 기물관련
 function Janggi_Move(board, from, to) {
+    let dead = '-';
     // from
     let from_piece = board.coords[from].piece;
     if (from_piece == '') {
         return;
     }
-    board.history.push(from + to);
     board.coords[from].piece = '';
 
     // to
     let to_piece = board.coords[to].piece;
     if (to_piece != '') {
         // dead
+        dead += to_piece;
     }
     // move
     board.coords[to].piece = from_piece;
-    board.turn_count++ ;
-
+    
     // anim
     board.coords[to].from_cell_id = board.coords[from].cell_id;
 
     if(board.ilegalmove == false){
+        if( board.history.length > board.turn_count ){
+            board.history.splice(board.turn_count);
+        }
+        board.history.push(from + '-' + to + dead);
+        board.turn_count++ ;
+        // switching
+        if(board.turn == 'w'){
+            board.turn = 'b';
+        }else{
+            board.turn = 'w';
+        }
+    }
+}
+
+function Janggi_Prev(board){
+    if(board.ilegalmove == false){
+        if(board.turn_count <= 0){
+            return ;
+        }
+        let move = board.history[board.turn_count - 1];
+
+        board.turn_count--;
+
+        if(move != '--'){ // 한수쉼이 아닌 경우
+            let splited = move.split('-');
+            let from = splited[0];
+            let to = splited[1];
+            let dead = splited[2];
+
+            // backward
+            board.coords[from].piece = board.coords[to].piece;
+            board.coords[to].piece = dead;
+            
+            // anim
+            board.coords[from].from_cell_id = board.coords[to].cell_id;
+
+            // unset highlight
+            Janggi_UnsetHighlight(board, from);
+            Janggi_UnsetHighlight(board, to);
+        }
+    }
+}
+
+function Janggi_Next(board){
+    if(board.ilegalmove == false){
+        if(board.turn_count >= board.history.length){
+            return ;
+        }
+        let move = board.history[board.turn_count];
+
+        board.turn_count++;
+
+        if(move != '--'){
+            let splited = move.split('-');
+            let from = splited[0];
+            let to = splited[1];
+            let dead = splited[2];
+
+            // backward
+            let from_piece = board.coords[from].piece;
+            board.coords[from].piece = '';
+            let to_piece = board.coords[to].piece;
+            board.coords[to].piece = from_piece;
+            
+
+            // anim
+            board.coords[to].from_cell_id = board.coords[from].cell_id;
+
+            // unset highlight
+            Janggi_UnsetHighlight(board, from);
+            Janggi_UnsetHighlight(board, to);
+        }     
+    }
+}
+
+function Janggi_PassTurn(board) {
+    if(board.ilegalmove == false){
+        board.history.push('--');
+        board.turn_count++ ;
         // switching
         if(board.turn == 'w'){
             board.turn = 'b';
@@ -981,10 +1060,11 @@ function Janggi_Render(board) {
         
     }
     // remove remain pieces
-    while (board.hidden_elem.firstChild) {
-        board.hidden_elem.removeChild(board.hidden_elem.lastChild);
-    }
+    // while (board.hidden_elem.firstChild) {
+    //     board.hidden_elem.removeChild(board.hidden_elem.lastChild);
+    // }
 }
+
 
 
 // utils

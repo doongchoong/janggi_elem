@@ -17,9 +17,9 @@
           </a>
     
           <ul class="nav nav-pills">
-            <li class="nav-item"><a href="https://doongchoong.github.io/janggi_elem/" class="nav-link active">시작</a></li>
+            <li class="nav-item"><a href="https://doongchoong.github.io/janggi_elem/" class="nav-link  ">시작</a></li>
 <li class="nav-item"><a href="https://doongchoong.github.io/janggi_elem/example" class="nav-link  ">Example</a></li>
-<li class="nav-item"><a href="https://doongchoong.github.io/janggi_elem/examplejs" class="nav-link  ">Examplejs</a></li>
+<li class="nav-item"><a href="https://doongchoong.github.io/janggi_elem/examplejs" class="nav-link active">Examplejs</a></li>
 <li class="nav-item"><a href="https://github.com/doongchoong/janggi_elem" class="nav-link  ">Github</a></li>
 
           </ul>
@@ -27,38 +27,38 @@
       </div>
     <div class="container">
 
-<div class="justify-content-center py-4 mb-4  border-bottom">
-<p class="lead">HTML 에서 장기판을 구현하는 프로젝트입니다. <code>janggi-board</code> 태그로 
-장기판을 만들 수 있습니다.</p>
-</div>
-
 <div class="row mb-2  border-bottom">
 
 <div class="col-md-6">
-<p><janggi-board 
-position="start"
-moveable-piece></janggi-board></p>
+<h3>Flip Board</h3>
 </div>
 
 <div class="col-md-6">
-<pre><code class="language-html">&lt;!doctype html&gt;
-&lt;html lang=&quot;ko&quot;&gt;
-&lt;head&gt;
-  &lt;meta charset=&quot;utf-8&quot;&gt;
-  &lt;title&gt;Janggi-board&lt;/title&gt;
-&lt;/head&gt;
 
-&lt;body&gt;
-    &lt;janggi-board position=&quot;start&quot; 
-    moveable-piece 
-    animation &gt;
-    &lt;/janggi-board&gt;
-    &lt;script 
-     src=&quot;js/janggi_board.js&quot;&gt;&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
+</div>
+
+<div class="col-md-6">
+<p><janggi-board id="jb1" position="start" animation></janggi-board>
+<button type="button" class="btn btn-primary" id="jb1btn">Flip Board</button></p>
+<script>
+let jb1btn = document.getElementById('jb1btn');
+jb1btn.addEventListener('click', function(){
+    let jb1 = document.getElementById('jb1');
+    Janggi_FlipBoard(jb1);
+    Janggi_Render(jb1);
+});
+</script>
+</div>
+
+<div class="col-md-6">
+<pre><code class="language-js">let jb1btn = document.getElementById('jb1btn');
+jb1btn.addEventListener('click', function(){
+    let jb1 = document.getElementById('jb1');
+    Janggi_FlipBoard(jb1);
+    Janggi_Render(jb1);
+});
 </code></pre>
-<p>간단한 태그로 HTML에서 장기판을 생성할 수 있습니다.</p>
+<p>FlipBoard를 이용하면 장기판을 뒤집을 수 있습니다.</p>
 </div>
 
 </div>
