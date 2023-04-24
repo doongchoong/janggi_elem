@@ -846,6 +846,8 @@ function Janggi_ParseFEN(board, fen){
         for (let i = 0; i < splited_fen[r].length; i++) {
             // 숫자인지 판단.
             let chr = splited_fen[r].charAt(i);
+            if(chr == 'b') { chr = 'e'}  // b 를 e로 변경 (elephant)
+            if(chr == 'B') { chr = 'E'} //  B 를 E로 변경 (ELEPHANT)
             if (/^[0-9]$/.test(chr)) {
                 c += parseInt(chr);
             } else {
