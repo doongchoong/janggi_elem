@@ -421,10 +421,10 @@ function JanggiBoard(elem, config){
             height: '400px',
             orientation: 'cho',
             piece_style: 'janggi',
-            animation: true,
+            animation: false,
             ilegalmove: false,
-            moveable: true,
-            position: 'start',
+            moveable: false,
+            position: '',
         };
         for (let k in config){
             _config [k] = config[k];
