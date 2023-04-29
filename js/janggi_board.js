@@ -1201,6 +1201,10 @@ window.addEventListener('load',function(e){
             config.position = board.getAttribute('position');
         }
 
+        if( board.hasAttribute('orientation')){
+            config.orientation = board.getAttribute('orientation');
+        }
+
         JanggiBoard(board, config);
     });
 });
