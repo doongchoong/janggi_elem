@@ -44,8 +44,8 @@
 let jb1btn = document.getElementById('jb1btn');
 jb1btn.addEventListener('click', function(){
     let jb1 = document.getElementById('jb1');
-    Janggi_FlipBoard(jb1);
-    Janggi_Render(jb1);
+    let board = JanggiBoard(jb1, {});
+    board.flip();
 });
 </script>
 </div>
@@ -54,11 +54,11 @@ jb1btn.addEventListener('click', function(){
 <pre><code class="language-js">let jb1btn = document.getElementById('jb1btn');
 jb1btn.addEventListener('click', function(){
     let jb1 = document.getElementById('jb1');
-    Janggi_FlipBoard(jb1);
-    Janggi_Render(jb1);
+    let board = JanggiBoard(jb1, {});
+    board.flip();
 });
 </code></pre>
-<p>FlipBoard를 이용하면 장기판을 뒤집을 수 있습니다.</p>
+<p><code>flip()</code>를 이용하면 장기판을 뒤집을 수 있습니다.</p>
 </div>
 
 </div>
