@@ -1081,6 +1081,7 @@ function JanggiBoard(elem, config){
                         elem.board._off_dest(d);
                     }
                     elem.board.game.before_dest = [];
+                    elem.board.game.before_click = null; //기존 선택 헤제 
             
                     if(move != '--'){ // 한수쉼이 아닌 경우
                         let splited = move.split('-');
@@ -1128,6 +1129,7 @@ function JanggiBoard(elem, config){
                         elem.board._off_dest(d);
                     }
                     elem.board.game.before_dest = [];
+                    elem.board.game.before_click = null; //기존 선택 헤제 
             
                     if(move != '--'){
                         let splited = move.split('-');
