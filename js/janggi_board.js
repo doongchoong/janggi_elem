@@ -1065,6 +1065,12 @@ function JanggiBoard(elem, config){
                     let move = elem.board.game.history[elem.board.game.turn_count - 1];
             
                     elem.board.game.turn_count--;
+                    // switching
+                    if(elem.board.game.turn == 'w'){
+                        elem.board.game.turn = 'b';
+                    }else{
+                        elem.board.game.turn = 'w';
+                    }
             
                     if(move != '--'){ // 한수쉼이 아닌 경우
                         let splited = move.split('-');
@@ -1096,6 +1102,12 @@ function JanggiBoard(elem, config){
                     let move = elem.board.game.history[elem.board.game.turn_count];
             
                     elem.board.game.turn_count++;
+                    // switching
+                    if(elem.board.game.turn == 'w'){
+                        elem.board.game.turn = 'b';
+                    }else{
+                        elem.board.game.turn = 'w';
+                    }
             
                     if(move != '--'){
                         let splited = move.split('-');
@@ -1109,7 +1121,6 @@ function JanggiBoard(elem, config){
                         let to_piece = elem.board.coords[to].piece;
                         elem.board.coords[to].piece = from_piece;
                         
-            
                         // anim
                         elem.board.coords[to].from_cell_id = elem.board.coords[from].cell_id;
             

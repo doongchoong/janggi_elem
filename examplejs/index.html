@@ -64,8 +64,8 @@ config을 이용해서 기본 설정을 할 수 있습니다. </p>
 <pre><code class="language-js">{
     width: '360px',
     height: '400px',
-    orientation: 'cho',
-    piece_style: 'janggi',
+    orientation: 'cho',    // han
+    piece_style: 'janggi', //  chess
     animation: false,
     ilegalmove: false,
     moveable: false,
@@ -73,6 +73,48 @@ config을 이용해서 기본 설정을 할 수 있습니다. </p>
 }
 </code></pre>
 <p>기본값은 위와 같으며 다르게 설정하고 싶은 필드만 설정하면 됩니다.</p>
+</div>
+
+</div>
+
+<div class="row mb-2  border-bottom">
+
+<div class="col-md-6">
+<h3>Methods</h3>
+</div>
+
+<div class="col-md-6">
+
+</div>
+
+<div class="col-md-6">
+<pre><code class="language-js">// 해당 위치의 기물이 이동할 수 있는 지점들
+board.get_dests(position);
+// 보드 사이즈 변경
+board.resize();
+// 시작방향 세팅 (초,한)
+board.set_orientation(direction); // 'cho' or 'han'
+// 보드 뒤집기
+board.flip();
+// 보드 초기화 (기물정리, 턴 및 수, 히스토리)
+board.clear();
+// FEN 파싱 
+board.parse_fen(fen_string);
+// 시작 포지션 세팅
+board.set_position(position_string);
+// 기물 이동 
+board.move(from,to);
+// 이전
+board.prev();
+// 다음
+board.next();
+// 한수쉼
+board.pass_turn();
+</code></pre>
+</div>
+
+<div class="col-md-6">
+<p>사용할 수 있는 메서드 목록</p>
 </div>
 
 </div>
@@ -109,6 +151,59 @@ jb1btn.addEventListener('click', function(){
 });
 </code></pre>
 <p><code>flip()</code>를 이용하면 장기판을 뒤집을 수 있습니다.</p>
+</div>
+
+</div>
+
+<div class="row mb-2  border-bottom">
+
+<div class="col-md-6">
+<h3>Move, Prev, Next</h3>
+</div>
+
+<div class="col-md-6">
+
+</div>
+
+<div class="col-md-6">
+<div id="jb2"></div>
+<p><button id="jb2_btn1" type="button" class="btn btn-success">이전</button>
+<button id="jb2_btn2" type="button" class="btn btn-danger">다음</button></p>
+<script>
+window.addEventListener('load', function(){
+    let div2 = document.getElementById('jb2');
+
+    let board2 = JanggiBoard(div2, {
+        position: '[coupled-knight][left-knight]',
+        animation: true,
+        moveable: true,
+    }); 
+
+    document.getElementById('jb2_btn1')
+    .addEventListener('click', function(){
+        board2.prev();
+    });
+
+    document.getElementById('jb2_btn2')
+    .addEventListener('click', function(){
+        board2.next();
+    });
+
+});
+</script>
+</div>
+
+<div class="col-md-6">
+<pre><code class="language-js">document.getElementById('jb2_btn1')
+.addEventListener('click', function(){
+    board2.prev();
+});
+
+document.getElementById('jb2_btn2')
+.addEventListener('click', function(){
+    board2.next();
+});
+</code></pre>
 </div>
 
 </div>
