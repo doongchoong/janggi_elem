@@ -1071,6 +1071,16 @@ function JanggiBoard(elem, config){
                     }else{
                         elem.board.game.turn = 'w';
                     }
+                    // 기존 선택 셀 하일라이트 헤제
+                    if(elem.board.game.before_highlight != null){
+                        elem.board._off_highlight(elem.board.game.before_highlight);
+                    }
+                    elem.board.game.before_highlight = null;
+                    // 기존 목표지점 헤제
+                    for(let d of elem.board.game.before_dest){
+                        elem.board._off_dest(d);
+                    }
+                    elem.board.game.before_dest = [];
             
                     if(move != '--'){ // 한수쉼이 아닌 경우
                         let splited = move.split('-');
@@ -1108,6 +1118,16 @@ function JanggiBoard(elem, config){
                     }else{
                         elem.board.game.turn = 'w';
                     }
+                    // 기존 선택 셀 하일라이트 헤제
+                    if(elem.board.game.before_highlight != null){
+                        elem.board._off_highlight(elem.board.game.before_highlight);
+                    }
+                    elem.board.game.before_highlight = null;
+                    // 기존 목표지점 헤제
+                    for(let d of elem.board.game.before_dest){
+                        elem.board._off_dest(d);
+                    }
+                    elem.board.game.before_dest = [];
             
                     if(move != '--'){
                         let splited = move.split('-');
